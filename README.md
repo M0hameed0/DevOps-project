@@ -23,16 +23,23 @@ DEVOPS-PROJECT/
 
 - **`app.py`**: The main application file for the Flask app. It sets up routes and connects them to functions in `utils.py` to provide API endpoints for app operations.
 
-- **`utils.py`**: Contains utility functions for core operations like addition and subtraction. This file is designed to house the main logic for the app’s functionality.
+- **`health_utils.py`**: Contains utility functions for core operations like addition and subtraction. This file is designed to house the main logic for the app’s functionality.
 
 - **`test.py`**: A unit test file that includes tests for the functions defined in `utils.py`. This file ensures that the core functionality behaves as expected.
 
 - **`requirements.txt`**: Lists the Python dependencies needed to run the application. This file is used to install the necessary packages in the project environment.
 
 - **`Makefile`**: A makefile to streamline project setup and operations. Includes commands for:
-  - `make init`: Install project dependencies.
-  - `make run`: Start the Flask app.
-  - `make test`: Run all unit tests.
+	- init        - Construit l'environnement virtuel .venv"
+	- install     - install les requirements.txt"			
+	- test        - lancer le fichier test.py"
+	- run1        - Exécute l'application dans .venv en arrière-plan"
+	- clean       - supprission de l'environemment virtuel et cache arrière-plan"
+	- build       - creation de l'image docker"
+	- run2        - lancer le conteneur en cours d'exécution"
+	- logs        - Affiche les logs du conteneur en cours d'exécution"
+	- test_api    - lancer des requette vers conteneur pour tester l'etat de fonctionnement"
+	- make help        - Affiche cette aide"
 
 - **`templates/home.html`**: HTML template for the app's user interface. This file provides input fields and buttons for interacting with the calculator operations.
 
