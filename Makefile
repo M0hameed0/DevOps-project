@@ -18,7 +18,7 @@ clean:
 build:
 	docker build -t mycalculator:latest .
 
-# run2:
+#  run2:
 #     docker run -p 5000:5000 mycalculator:latest
 
 test_api:
