@@ -1,5 +1,5 @@
 import unittest
-from utils import calculate_bmi, calculate_bmr
+from health_utils import calculate_bmi, calculate_bmr
 class TestHealthCalculatorUtils(unittest.TestCase):
     def test_calculate_bmi(self):
         self.assertEqual(calculate_bmi(70, 1.75), 22.86)
