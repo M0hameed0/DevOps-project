@@ -1,29 +1,20 @@
 import unittest
-from utils import calculate_monthly_payment, calculate_total_cost
+from utils import calculate_bmi, calculate_bmr
+class TestHealthCalculatorUtils(unittest.TestCase):
+    def test_calculate_bmi(self):
+        self.assertEqual(calculate_bmi(70, 1.75), 22.86)
+        with self.assertRaises(ValueError):
+            calculate_bmi(-70, 1.75)
 
-class TestLoanCalculatorUtils(unittest.TestCase):
-    def test_calculate_monthly_payment_with_interest(self):
-        loan_amount = 10000
-        duration_years = 5
-        annual_interest_rate = 5
-        expected_payment = 188.71
-        result = calculate_monthly_payment(loan_amount, duration_years, annual_interest_rate)
-        self.assertAlmostEqual(result, expected_payment, places=2)
+    def test_calculate_bmr_male(self):
+        self.assertEqual(calculate_bmr(70, 175, 30, 'male'), 1695.67)
 
-    def test_calculate_monthly_payment_no_interest(self):
-        loan_amount = 10000
-        duration_years = 5
-        annual_interest_rate = 0
-        expected_payment = 166.67
-        result = calculate_monthly_payment(loan_amount, duration_years, annual_interest_rate)
-        self.assertAlmostEqual(result, expected_payment, places=2)
+    def test_calculate_bmr_female(self):
+        self.assertEqual(calculate_bmr(70, 175, 30, 'female'), 1507.13)
 
-    def test_calculate_total_cost(self):
-        monthly_payment = 188.71
-        duration_years = 5
-        expected_total_cost = 11322.6
-        result = calculate_total_cost(monthly_payment, duration_years)
-        self.assertAlmostEqual(result, expected_total_cost, places=2)
+    def test_calculate_bmr_invalid(self):
+        with self.assertRaises(ValueError):
+            calculate_bmr(70, 175, 30, 'other')
 
 if __name__ == '__main__':
     unittest.main()

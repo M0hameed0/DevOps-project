@@ -1,15 +1,17 @@
-def calculate_monthly_payment(loan_amount, duration_years, annual_interest_rate):
-    monthly_interest_rate = (annual_interest_rate / 100) / 12
-    total_payments = duration_years * 12
+def calculate_bmi(weight, height):
+    """Calcule le Body Mass Index (BMI)."""
+    if height <= 0 or weight <= 0:
+        raise ValueError("Height and weight must be positive values.")
+    return round(weight / (height ** 2), 2)
+
+def calculate_bmr(weight, height, age, gender):
+    """Calcule le Basal Metabolic Rate (BMR)."""
+    if any(value <= 0 for value in [weight, height, age]) or gender not in ['male', 'female']:
+        raise ValueError("Invalid input values.")
     
-    if monthly_interest_rate > 0:
-        monthly_payment = loan_amount * (monthly_interest_rate * (1 + monthly_interest_rate) ** total_payments) / ((1 + monthly_interest_rate) ** total_payments - 1)
-    else:
-        monthly_payment = loan_amount / total_payments
-
-    return round(monthly_payment, 2)
-
-def calculate_total_cost(monthly_payment, duration_years):
-    total_payments = duration_years * 12
-    total_cost = monthly_payment * total_payments
-    return round(total_cost, 2)
+    if gender == 'male':
+        bmr = 88.362 + (13.397 * weight) + (4.799 * height) - (5.677 * age)
+    else:  # gender == 'female'
+        bmr = 447.593 + (9.247 * weight) + (3.098 * height) - (4.330 * age)
+    
+    return round(bmr, 2)

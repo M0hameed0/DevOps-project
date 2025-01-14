@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, jsonify
-from utils import calculate_monthly_payment, calculate_total_cost
+from utils import calculate_bmi, calculate_bmr
 
 app = Flask(__name__)
 
@@ -7,19 +7,35 @@ app = Flask(__name__)
 def home():
     return render_template('home.html')
 
-@app.route('/calculate', methods=['POST'])
-def calculate():
-    loan_amount = float(request.form['loan_amount'])
-    duration_years = int(request.form['duration'])
-    annual_interest_rate = float(request.form['interest_rate'])
+@app.route('/bmi', methods=['POST'])
+def bmi():
+    try:
+        # Récupérer les données du formulaire
+        weight = float(request.form['weight'])
+        height = float(request.form['height'])
 
-    monthly_payment = calculate_monthly_payment(loan_amount, duration_years, annual_interest_rate)
-    total_cost = calculate_total_cost(monthly_payment, duration_years)
+        # Calculer le BMI
+        bmi_result = calculate_bmi(weight, height)
 
-    return jsonify({
-        'monthly_payment': monthly_payment,
-        'total_cost': total_cost
-    })
+        return jsonify({'bmi': bmi_result}), 200
+    except (KeyError, ValueError) as e:
+        return jsonify({'error': str(e)}), 400
 
+@app.route('/bmr', methods=['POST'])
+def bmr():
+    try:
+        # Récupérer les données du formulaire
+        weight = float(request.form['weight'])
+        height = float(request.form['height'])
+        age = int(request.form['age'])
+        gender = request.form['gender']
+
+        # Calculer le BMR
+        bmr_result = calculate_bmr(weight, height, age, gender)
+
+        return jsonify({'bmr': bmr_result}), 200
+    except (KeyError, ValueError) as e:
+        return jsonify({'error': str(e)}), 400
+    
 if __name__ == '__main__':
     app.run(debug=True)

@@ -1,8 +1,25 @@
+.PHONY: init install test run1 clean build run2 test_api
 init:
-	pip install -r requirements.txt
+	python3 -m venv .venv
 
-run:
-	python app.py
+install:
+	. .venv/bin/activate; pip install --upgrade pip; pip install -r requirements.txt
 
 test:
-	python -m unittest test.py
+	. .venv/bin/activate; pytest test.py
+
+run1:
+	. .venv/bin/activate; python app.py
+
+clean:
+	rm -rf .venv __pycache__ .pytest_cache
+	find . -type f -name "*.pyc" -delete
+
+build:
+	docker build -t mycalculator:latest .
+
+# run2:
+#     docker run -p 5000:5000 mycalculator:latest
+
+test_api:
+    docker run mycalculator:latest python -m pytest test.py -v
