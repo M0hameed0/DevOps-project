@@ -30,4 +30,6 @@ jobs:
       run: make test
 
     - name: Run
-      run: make run1
+      run: |
+        ip -c a
+        make run1
