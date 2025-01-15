@@ -39,7 +39,7 @@ DEVOPS-PROJECT/
 	- run2        - lancer le conteneur en cours d'exécution"
 	- logs        - Affiche les logs du conteneur en cours d'exécution"
 	- test_api    - lancer des requette vers conteneur pour tester l'etat de fonctionnement"
-	- make help        - Affiche cette aide"
+	- make help   - Affiche cette l'aide et les commandes de makefile"
 
 - **`templates/home.html`**: HTML template for the app's user interface. This file provides input fields and buttons for interacting with the calculator operations.
 
