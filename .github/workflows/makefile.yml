@@ -8,7 +8,7 @@ on:
 
 jobs:
   build:
-
+    timeout-minutes: 1  # Tout le job s'arrête après 1 minute
     runs-on: ubuntu-latest
 
     steps:
