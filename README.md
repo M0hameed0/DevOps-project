@@ -1,6 +1,17 @@
-# Flask App - DevOps Project Template
+# Health Calculator App - DevOps Project
+Health Calculator App est une application Python conçue pour effectuer des calculs simple des métriques de santés. Elle peut être exécutée localement dans un environnement virtuel ou déployée dans un conteneur Docker. 
+le projet est entièrement containerisé avec Docker, géré par un Makefile, le depot inclut également une pipeline CI/CD pour un déploiement automatisé sur Azure App Service.
 
-This repository serves as a template for a simple Flask-based DevOps project. The app provides basic calculator functionalities (addition and subtraction) and includes all necessary files for setting up a local environment, running tests, and deploying to a cloud service with best practices in DevOps.
+## Fonctionnalités et les calculs
+Calculs de santé :
+IMC (BMI) : Calcul basé sur le poids (kg) et la taille (m).
+BMI = weight (kg)/(height (m))^2
+
+BMR (Basal Metabolic Rate) : Basé sur les formules  de Harris-Benedict.
+For males:
+BMR = 88.362 + (13.397 x weight (kg)) + (4.799 x height (cm)) - (5.677 x age (years))
+For females:
+BMR = 447.593 + (9.247 x weight (kg)) + (3.098 x height (cm)) - (4.330 x age (years))
 
 ## Project Structure
 
@@ -8,28 +19,28 @@ The repository is organized as follows:
 
 ```plaintext
 DEVOPS-PROJECT/
-├── app.py
-├── health_utils.py
-├── test.py
-├── requirements.txt
-├── Makefile
+├── Dockerfile          # Instructions de création de l'image Docker
+├── Makefile            # Script pour automatiser les tâches
+├── app.py              # Code principal de l'application
+├── health_utils.py     # Utilitaires pour vérifier l'état de santé
+├── requirements.txt    # Dépendances Python
 ├── templates/
-│   └── home.html
-├── .env
-├── .gitignore
+│   └── home.html       # Interface utilisateur HTML
+├── test.py             # Tests unitaires
+├── .github/workflows/	 
+│   └── ci-cd.yml	# Pipeline CICD pour le deploiement
+│   └── test_pipeline_With_makefile	# Template pour la config de pipeline test Makefile
+└── README.md           # Documentation du projet
+
 ```
 
-### File Descriptions
+## Descriptions des Fichiers
 
-- **`app.py`**: The main application file for the Flask app. It sets up routes and connects them to functions in `utils.py` to provide API endpoints for app operations.
+- **`Dockerfile`** :
+Contient les instructions pour construire une image Docker pour l'application. Il inclut les étapes nécessaires pour installer les dépendances, copier les fichiers de l'application et configurer l'environnement d'exécution.
 
-- **`health_utils.py`**: Contains utility functions for core operations like addition and subtraction. This file is designed to house the main logic for the app’s functionality.
-
-- **`test.py`**: A unit test file that includes tests for the functions defined in `utils.py`. This file ensures that the core functionality behaves as expected.
-
-- **`requirements.txt`**: Lists the Python dependencies needed to run the application. This file is used to install the necessary packages in the project environment.
-
-- **`Makefile`**: A makefile to streamline project setup and operations. Includes commands for:
+- **`Makefile`** :
+Un script d'automatisation pour simplifier les tâches courantes comme l'installation des dépendances, l'exécution des tests, la création de l'image Docker, et le lancement de l'application, voilà les commandes de makefile:
 	- init        - Construit l'environnement virtuel .venv"
 	- install     - install les requirements.txt"			
 	- test        - lancer le fichier test.py"
@@ -40,36 +51,92 @@ DEVOPS-PROJECT/
 	- logs        - Affiche les logs du conteneur en cours d'exécution"
 	- test_api    - lancer des requette vers conteneur pour tester l'etat de fonctionnement"
 	- make help   - Affiche cette l'aide et les commandes de makefile"
+   
+- **`app.py`** :
+Le fichier principal de l'application. Il configure les routes de l'API REST et les connecte aux fonctions définies dans health_utils.py pour fournir les points d'accès aux calculs d'IMC et de BMR.
 
-- **`templates/home.html`**: HTML template for the app's user interface. This file provides input fields and buttons for interacting with the calculator operations.
+- **`health_utils.py`** :
+Contient les fonctions utilitaires principales pour le calcul de l'IMC et du BMR. Ce fichier regroupe toute la logique métier de l'application.
 
-- **`.env`**: A configuration file for environment variables. It’s used to securely store sensitive information (like API keys, database credentials, or environment-specific settings). **Note**: This file should not be committed to version control for security reasons.
+- **`requirements.txt`** :
+Liste des dépendances Python nécessaires pour exécuter l'application. Ces dépendances seront installées automatiquement dans l'environnement virtuel ou lors de la construction de l'image Docker.
 
-- **`.gitignore`**: Specifies files and directories that should be ignored by Git. It typically includes files such as `.env` and compiled Python files (`__pycache__`), as well as local environment and dependency caches.
+- **`templates/home.html`** :
+Un fichier HTML utilisé comme interface utilisateur pour présenter ou tester l'application. Ce fichier peut être enrichi pour inclure des formulaires ou afficher les résultats des calculs.
 
-## Getting Started
+- **`test.py`** :
+Fichier de tests unitaires pour vérifier le bon fonctionnement des fonctions de calcul définies dans health_utils.py. Il garantit que l'application produit les résultats attendus.
 
-1. **Clone the Repository**:
+- **`.github/workflows/ci-cd.yml`** :
+Un fichier YAML décrivant le pipeline CI/CD. Il automatise les tests, la construction de l'image Docker et le déploiement de l'application sur Azure App Service lorsque du code est poussé dans la branche principale.
+
+- **`.github/workflows/test_pipeline_With_makefile`** :
+Un modèle de pipeline CI/CD basé sur Makefile. Vous pouvez renommer ce fichier avec l'extension .yml si vous souhaitez exécuter un pipeline spécifique utilisant les commandes définies dans le Makefile.
+
+- **`README.md`** :
+Documentation complète du projet, expliquant l'objectif, les fonctionnalités, les instructions d'installation et d'exécution, ainsi que les détails du pipeline CI/CD.
+
+## Prérequis
+
+- **`Python`** 3.10 ou supérieur
+- **`Docker`** installé sur votre machine
+- **`Compte Azure`** avec App Service configuré
+- **`Make`** installé pour automatiser les tâches
+
+
+## Installation et utilisation
+
+1. ** Cloner le dépôt**:
    ```bash
    git clone <repository-url>
    cd DEVOPS-PROJECT
    ```
 
-2. **Set Up the Environment**:
-   - Create and activate a virtual environment (recommended for managing dependencies).
-   - Install the dependencies:
+2. **Exécuter localement**:
+  1- Initialiser l'environnement
      ```bash
      make init
      ```
-
-3. **Run the Application**:
+   2- Installer les dependances:
+     ```bash
+     make install
+     ```
+   3- lancer une test de fonctionnement d'API:
+     ```bash
+     make test
+     ```
+   4- lancer l'App:
+     ```bash
+     make run1
+     ```
+   5- supprimer l'environnement virtuel + cache:
+     ```bash
+     make clean
+     ```
+   6- builder l'image Docker grace à Dockerfile:
+     ```bash
+     make build
+     ```
+   6- lancer un conteneur Docker avec l'image qu'on a buildé:
+     ```bash
+     make run2
+     ```
+   6- voir les logs de conteneur docker:
+     ```bash
+     make logs
+     ```
+   6- test le bon fonctionnement de site via une commande:
+     ```bash
+     make test_api
+     ```
+4. **Application**:
    - Start the Flask app locally:
      ```bash
      make run
      ```
 
 
-4. **Run Tests**:
+5. **Run Tests**:
    - Execute unit tests to verify functionality:
      ```bash
      make test
