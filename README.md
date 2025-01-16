@@ -151,6 +151,7 @@ la deuxieme partie de pipline (deploy), consiste à telecharger l'artfact ZIP qu
 
 ## Déclenchement du déploiement
 c'est simple, Poussez vos modifications sur la branche main, voilà les commande git :
+
      ```bash
  	git add .
 	git commit -m "Mise à jour"
