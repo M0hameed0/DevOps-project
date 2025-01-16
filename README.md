@@ -82,11 +82,12 @@ Documentation complète du projet, expliquant l'objectif, les fonctionnalités, 
 - **`Docker`** installé sur votre machine
 - **`Compte Azure`** avec App Service configuré
 - **`Make`** installé pour automatiser les tâches
+- **`les secrets et variables`** definir les variables et les secrets necessaires dans Repository secrets de Github
 
 
 ## Installation et utilisation
 
-1. ** Cloner le dépôt**:
+1. **Cloner le dépôt**:
    ```bash
    git clone <repository-url>
    cd DEVOPS-PROJECT
@@ -117,26 +118,31 @@ Documentation complète du projet, expliquant l'objectif, les fonctionnalités, 
      ```bash
      make build
      ```
-   6- lancer un conteneur Docker avec l'image qu'on a buildé:
+   7- lancer un conteneur Docker avec l'image qu'on a buildé:
      ```bash
      make run2
      ```
-   6- voir les logs de conteneur docker:
+   8- voir les logs de conteneur docker:
      ```bash
      make logs
      ```
-   6- test le bon fonctionnement de site via une commande:
+   9- test le bon fonctionnement de site via une commande:
      ```bash
      make test_api
      ```
-4. **Application**:
-   - Start the Flask app locally:
-     ```bash
-     make run
-     ```
+## Pipeline ci-cd.yml:
+Le projet inclut un pipeline GitHub Actions pour automatiser les taches presenté dans Makefile, et le deploiement automatique sur AZURE, voilà quelques Actions de notre Pipeline:
+   1- le pipeline se divise en 2 partie principal (jobs) que je vais explique dans l'etape suivants
+   2- Les tests unitaires sont integré à notre pipline
+   3- la construction automatique de l'image Docker
+   4- Deploiement sur Azure App Service
+
+la premier partie de pipline (build), vas nous permettre de lancé automatiquement les etapes defini dans Makefile, jusqu'a l'etape de buildé l'image Docker, et aussi créer le fichier ZIP qu'on vas televerser pour le deploiement sur azure.
+
+la deuxieme partie de pipline (deploy), consiste à telecharger l'artfact ZIP qu'on avait créer dans la partie build, puis le decompresser et se connecter à notre environnement Azure gràce à les variables qu'on avait defini dans Repository secrets de GITHUB, et en final deployer l'APP dans l'environnement de deploiement.
 
 
-5. **Run Tests**:
+5. **Run**:
    - Execute unit tests to verify functionality:
      ```bash
      make test
