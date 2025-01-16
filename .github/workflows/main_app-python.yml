@@ -7,33 +7,43 @@ name: Build and deploy Python app to Azure Web App - app-python
 on:
   push:
     branches:
-      - main
-  workflow_dispatch:
+      - main  # Déclenche le workflow lors d'un push vers la branche "main"
+  workflow_dispatch:  # déclencher manuellement ce workflow
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest # Exécute le job sur une machine Ubuntu
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set up Python version
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.10'
+      # Étape 2 : Installer Make (nécessaire pour utiliser le Makefile)
+      - name: Install make
+        run: sudo apt-get update && sudo apt-get install -y make
 
-      - name: Create and start virtual environment
-        run: |
-          python -m venv venv
-          source venv/bin/activate
-      
+      # Étape 3 : Initialiser l'environnement virtuel
+      - name: Initialize virtual environment
+        run: make init # Exécute la commande "make init" pour créer .venv
+
+      # Étape 4 : Installer les dépendances
       - name: Install dependencies
-        run: pip install -r requirements.txt
-        
-      # Optional: Add step to run tests here (PyTest, Django test suites, etc.)
+        run: make install # Exécute la commande "make install" pour installer les dépendances
 
+      # Étape 5 : Exécuter les tests
+      - name: Run tests
+        run: make test # Exécute la commande "make test" pour lancer les tests
+
+      # Étape 6 : Construire l'image Docker
+      - name: Build Docker image
+        run: make build # Exécute la commande "make build" pour créer une image Docker
+
+
+      # Étape 7 : Créer un artefact ZIP pour le déploiement
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
+
+      # Étape 8 : Téléverser l'artefact pour l'étape prochaine de déploiement sur Azure
+      # dans cette etape on vas exclut l'environnement virtuel crée .venv du fichier ZIP
 
       - name: Upload artifact for deployment jobs
         uses: actions/upload-artifact@v4
@@ -41,38 +51,41 @@ jobs:
           name: python-app
           path: |
             release.zip
-            !venv/
+            !.venv/ # Exclut le dossier .venv
 
-  deploy:
-    runs-on: ubuntu-latest
-    needs: build
+  deploy: # le job de deploiement en prod
+    runs-on: ubuntu-latest # Exécute le job de déploiement sur une machine Ubuntu
+    needs: build # Dépend du job "build", s'exécute uniquement si le build réussit
     environment:
-      name: 'Production'
+      name: 'Production' # Définit l'environnement en tant que "Production"
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
     permissions:
-      id-token: write #This is required for requesting the JWT
+      id-token: write # pour l'authentification avec Azure
 
     steps:
+    # Étape 1 : Télécharger l'artefact créé lors du build
       - name: Download artifact from build job
         uses: actions/download-artifact@v4
         with:
-          name: python-app
+          name: python-app # Télécharge l'artefact nommé "python-app" que les job build à créer
 
+      # Étape 2 : Décompresser l'artefact
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
-      
+      # Étape 3 : Se connecter à Azure
       - name: Login to Azure
         uses: azure/login@v2
-        with:
+        with: # Utilise des secrets qu'on a declarer pour sécuriser les informations d'authentification Azure
           client-id: ${{ secrets.AZUREAPPSERVICE_CLIENTID_297065EABF1B46BD820B4A6AD8F58C58 }}
           tenant-id: ${{ secrets.AZUREAPPSERVICE_TENANTID_47920ADD4B784D8BB866CB251684C06A }}
           subscription-id: ${{ secrets.AZUREAPPSERVICE_SUBSCRIPTIONID_60AE57FCE30E4FBAA509C5AC345DD0C6 }}
 
+      # Étape 4 : Déployer sur Azure Web App
       - name: 'Deploy to Azure Web App'
         uses: azure/webapps-deploy@v3
         id: deploy-to-webapp
         with:
-          app-name: 'app-python'
-          slot-name: 'Production'
+          app-name: 'app-python' # Nom de l'application Azure
+          slot-name: 'Production' # Nom du l'environnement de déploiement
           
