@@ -37,12 +37,15 @@ jobs:
       - name: Build Docker image
         run: make build # Exécute la commande "make build" pour créer une image Docker
 
+      # Étape 7 : supprimer les fichiers non necessaires
+      - name: Clean cache files
+        run: make clean
 
-      # Étape 7 : Créer un artefact ZIP pour le déploiement
+      # Étape 8 : Créer un artefact ZIP pour le déploiement
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
-      # Étape 8 : Téléverser l'artefact pour l'étape prochaine de déploiement sur Azure
+      # Étape 9 : Téléverser l'artefact pour l'étape prochaine de déploiement sur Azure
       # dans cette etape on vas exclut l'environnement virtuel crée .venv du fichier ZIP
 
       - name: Upload artifact for deployment jobs
