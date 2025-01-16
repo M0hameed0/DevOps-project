@@ -130,6 +130,14 @@ Documentation complète du projet, expliquant l'objectif, les fonctionnalités, 
      ```bash
      make test_api
      ```
+## les secrets et variables
+Pour que le deploiment en Azure se passe bien, notre pipline à besoin de quelques variable pour mieux euthentifie et se connecter à Azure
+Ces variables secrètes contiennent des informations sensibles nécessaires pour permettre à GitHub Actions de s'authentifier auprès d'Azure et de déployer l'application sur Azure App Service en toute sécurité. Voici leur rôle détaillé :
+
+- **`AZUREAPPSERVICE_CLIENTID`** : Identifie l'application (Service Principal) utilisée pour s'authentifier sur Azure.
+- **`AZUREAPPSERVICE_SUBSCRIPTIONID`** : Spécifie l'abonnement Azure où les ressources sont déployées.
+- **`AZUREAPPSERVICE_TENANTID`** : Identifie le locataire Azure AD (organisation) pour l'authentification.
+  
 ## Pipeline ci-cd.yml:
 Le projet inclut un pipeline GitHub Actions pour automatiser les taches presenté dans Makefile, et le deploiement automatique sur AZURE, voilà quelques Actions de notre Pipeline:
    1- le pipeline se divise en 2 partie principal (jobs) que je vais explique dans l'etape suivants
@@ -141,28 +149,19 @@ la premier partie de pipline (build), vas nous permettre de lancé automatiqueme
 
 la deuxieme partie de pipline (deploy), consiste à telecharger l'artfact ZIP qu'on avait créer dans la partie build, puis le decompresser et se connecter à notre environnement Azure gràce à les variables qu'on avait defini dans Repository secrets de GITHUB, et en final deployer l'APP dans l'environnement de deploiement.
 
-
-5. **Run**:
-   - Execute unit tests to verify functionality:
+## Déclenchement du déploiement
+c'est simple, Poussez vos modifications sur la branche main, voilà les commande git :
      ```bash
-     make test
+ 	git add .
+	git commit -m "Mise à jour"
+	git push origin main
      ```
 
-## Additional Configuration
+puis, notre pipeline se déclenchera automatiquement et déploiera l'application sur Azure.
 
-- **Environment Variables**:
-  - Use the `.env` file to store any environment-specific configurations or sensitive information. Be sure to keep this file out of version control by listing it in `.gitignore`.
-
-## Deployment Instructions
-
-For deployment, configure CI/CD pipelines according to your preferred platform (e.g., GitHub Actions, Azure Pipelines). This template can be used with cloud deployment platforms like AWS, Azure, or Heroku for easy scalability.
-  - Use `pipeline.yaml` as a template for a pipeline to build and deploy an application on Azure
 
 ## Author
 
-This template was created by **Ali Mokh** and is intended as an educational resource for DevOps projects involving Flask applications.
+This template was created by **Mohamed Nait boufous** and is intended as an educational resource for DevOps projects involving Flask applications.
 
-## License and Usage
-
-This project template is open to use by anyone and may be freely adapted for personal or professional projects. If you use this template as part of teaching materials or educational content, please cite **Ali Mokh** as the original author.
 
