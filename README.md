@@ -168,6 +168,10 @@ image de l'appli WEB:
 ![image](https://github.com/user-attachments/assets/9a9d67d6-66f9-42f2-bc64-fd76a5a99ffe)
 
 
+## Pour Info
+Tous les fichiers nécessaires pour assurer le bon fonctionnement de l'application sont bien structurés et organisés. Chaque étape du code est soigneusement commentée pour faciliter la compréhension et permettre une navigation fluide à travers les différentes fonctionnalités de l'application
+
+
 ## Author
 
 This template was created by **Mohamed Nait boufous** and is intended as an educational resource for DevOps projects involving Flask applications.
