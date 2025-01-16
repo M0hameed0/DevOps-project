@@ -3,15 +3,25 @@ Health Calculator App est une application Python conçue pour effectuer des calc
 le projet est entièrement containerisé avec Docker, géré par un Makefile, le depot inclut également une pipeline CI/CD pour un déploiement automatisé sur Azure App Service.
 
 ## Fonctionnalités et les calculs
-Calculs de santé :
+- **`Calculs de santé`** :
+	1- Fonction calculate_bmi
 IMC (BMI) : Calcul basé sur le poids (kg) et la taille (m).
+Formule:
 BMI = weight (kg)/(height (m))^2
+Retour : La valeur calculée est arrondie à 2 décimales.
 
+ 	2- Fonction calculate_bmr 
 BMR (Basal Metabolic Rate) : Basé sur les formules  de Harris-Benedict.
-For males:
+Formules:
+Pour hommes
 BMR = 88.362 + (13.397 x weight (kg)) + (4.799 x height (cm)) - (5.677 x age (years))
-For females:
+Pour femmes
 BMR = 447.593 + (9.247 x weight (kg)) + (3.098 x height (cm)) - (4.330 x age (years))
+Retour : La valeur calculée est arrondie à 2 décimales.
+
+API REST :
+Points de terminaison pour fournir les calculs.
+Réponses structurées en JSON.
 
 ## Project Structure
 
