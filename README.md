@@ -153,11 +153,10 @@ la deuxieme partie de pipline (deploy), consiste à telecharger l'artfact ZIP qu
 c'est simple, Poussez vos modifications sur la branche main, voilà les commande git :
 
      ```bash
- 	git add .
-	git commit -m "Mise à jour"
-	git push origin main
+     git add .
+     git commit -m "Mise à jour"
+     git push origin main
      ```
-
 puis, notre pipeline se déclenchera automatiquement et déploiera l'application sur Azure.
 ## Acceder à l'APP:
 Dans mon cas, j'ai deployer l'application dans Azure APP service, voilà le lien pour acceder à l'application:
