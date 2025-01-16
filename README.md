@@ -158,6 +158,11 @@ c'est simple, Poussez vos modifications sur la branche main, voilà les commande
      ```
 
 puis, notre pipeline se déclenchera automatiquement et déploiera l'application sur Azure.
+## Acceder à l'APP:
+Dans mon cas, j'ai deployer l'application dans Azure APP service, voilà le lien pour acceder à l'application:
+https://app-python-hng3b7gbgsb9e7c5.francecentral-01.azurewebsites.net/
+image de l'appli WEB:
+![image](https://github.com/user-attachments/assets/9a9d67d6-66f9-42f2-bc64-fd76a5a99ffe)
 
 
 ## Author
