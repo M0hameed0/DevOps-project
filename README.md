@@ -161,6 +161,9 @@ la deuxieme partie de pipline (deploy), consiste à telecharger l'artfact ZIP qu
 
 ## Shema de fonctionnement de piêline ci-cd:
 
+Voici un schéma des étapes de la pipeline CI/CD 
+
+
 ![image](https://github.com/user-attachments/assets/214ebac4-09f0-4082-88ec-4c57f84c4e82)
 
 
