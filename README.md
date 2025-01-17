@@ -159,6 +159,11 @@ la premier partie de pipline (build), vas nous permettre de lancé automatiqueme
 
 la deuxieme partie de pipline (deploy), consiste à telecharger l'artfact ZIP qu'on avait créer dans la partie build, puis le decompresser et se connecter à notre environnement Azure gràce à les variables qu'on avait defini dans Repository secrets de GITHUB, et en final deployer l'APP dans l'environnement de deploiement.
 
+## Shema de fonctionnement de piêline ci-cd:
+
+![image](https://github.com/user-attachments/assets/214ebac4-09f0-4082-88ec-4c57f84c4e82)
+
+
 ## Déclenchement du déploiement
 c'est simple, Poussez vos modifications sur la branche main, voilà les commande git :
 
