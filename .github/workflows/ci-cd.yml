@@ -17,35 +17,35 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Étape 2 : Installer Make (nécessaire pour utiliser le Makefile)
+      # Étape 1 : Installer Make (nécessaire pour utiliser le Makefile)
       - name: Install make
         run: sudo apt-get update && sudo apt-get install -y make
 
-      # Étape 3 : Initialiser l'environnement virtuel
+      # Étape 2 : Initialiser l'environnement virtuel
       - name: Initialize virtual environment
         run: make init # Exécute la commande "make init" pour créer .venv
 
-      # Étape 4 : Installer les dépendances
+      # Étape 3 : Installer les dépendances
       - name: Install dependencies
         run: make install # Exécute la commande "make install" pour installer les dépendances
 
-      # Étape 5 : Exécuter les tests
+      # Étape 4 : Exécuter les tests
       - name: Run tests
         run: make test # Exécute la commande "make test" pour lancer les tests
 
-      # Étape 6 : Construire l'image Docker
+      # Étape 5 : Construire l'image Docker
       - name: Build Docker image
         run: make build # Exécute la commande "make build" pour créer une image Docker
 
-      # Étape 7 : supprimer les fichiers non necessaires
+      # Étape 6 : supprimer les fichiers non necessaires
       - name: Clean cache files
         run: make clean
 
-      # Étape 8 : Créer un artefact ZIP pour le déploiement
+      # Étape 7 : Créer un artefact ZIP pour le déploiement
       - name: Zip artifact for deployment
         run: zip release.zip ./* -r
 
-      # Étape 9 : Téléverser l'artefact pour l'étape prochaine de déploiement sur Azure
+      # Étape 8 : Téléverser l'artefact pour l'étape prochaine de déploiement sur Azure
       # dans cette etape on vas exclut l'environnement virtuel crée .venv du fichier ZIP
 
       - name: Upload artifact for deployment jobs
